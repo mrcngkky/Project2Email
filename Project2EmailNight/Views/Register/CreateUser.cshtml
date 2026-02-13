@@ -140,7 +140,7 @@
                                                 </div>
 
                                                 <div class="col-12 text-center mt-3">
-                                                    <p class="mb-0 small-text">Zaten hesabınız var mı? <a asp-action="Index" asp-controller="Login">Giriş Yap</a></p>
+                                                    <p class="mb-0 small-text">Zaten hesabınız var mı? <a asp-action="UserLogin" asp-controller="Login">Giriş Yap</a></p>
                                                 </div>
                                             </form>
                                         </div>
@@ -166,8 +166,43 @@
                     <h5 class="modal-title">Kullanım Şartları</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body">
-                    <p>Kurallar ve gizlilik politikası metni...</p>
+                <div class="modal-body" style="max-height: 400px; overflow-y: auto;">
+
+                    <h4 class="text-center fw-bold mb-4">Kullanım Şartları ve Gizlilik Politikası</h4>
+
+                    <h6 class="fw-bold text-primary">1. Kabul Edilme Şartları</h6>
+                    <p class="text-muted small text-justify">
+                        Bu platforma kayıt olarak, aşağıda belirtilen şartları, kuralları ve gizlilik politikalarını okuduğunuzu, anladığınızı ve kabul ettiğinizi beyan etmiş sayılırsınız.
+                    </p>
+                    <hr class="my-2">
+
+                    <h6 class="fw-bold text-primary">2. Hesap Oluşturma ve Güvenlik</h6>
+                    <ul class="text-muted small">
+                        <li class="mb-1">Kullanıcılar, kayıt sırasında verdikleri <strong>Ad, Soyad ve E-posta</strong> bilgilerinin doğruluğundan sorumludur.</li>
+                        <li class="mb-1">Hesap güvenliği için belirlenen şifrelerin gizli tutulması kullanıcının yükümlülüğündedir.</li>
+                        <li class="mb-1">"Google ile Kayıt Ol" seçeneği kullanıldığında, Google tarafından sağlanan verilerin işlenmesine izin verilmiş sayılır.</li>
+                    </ul>
+                    <hr class="my-2">
+
+                    <h6 class="fw-bold text-primary">3. Kişisel Verilerin Korunması (KVKK)</h6>
+                    <ul class="text-muted small">
+                        <li class="mb-1">Paylaştığınız veriler, sadece sistem içerisindeki hesabınızın doğrulanması ve size özel hizmetlerin sunulması amacıyla kullanılır.</li>
+                        <li class="mb-1">E-posta adresiniz, sistem bildirimleri ve hesap doğrulama süreçleri için saklanmaktadır.</li>
+                        <li class="mb-1">Verileriniz, kullanıcının açık rızası olmaksızın üçüncü taraf reklam mecralarıyla paylaşılmaz.</li>
+                    </ul>
+                    <hr class="my-2">
+
+                    <h6 class="fw-bold text-primary">4. Kullanım Kısıtlamaları</h6>
+                    <p class="text-muted small text-justify">
+                        Sistem üzerinde tersine mühendislik yapılması, verilerin izinsiz çekilmesi veya kötü niyetli kullanım yasaktır. Diğer kullanıcıların deneyimini olumsuz etkileyecek her türlü faaliyet hesabın askıya alınmasına neden olabilir.
+                    </p>
+                    <hr class="my-2">
+
+                    <h6 class="fw-bold text-primary">5. Yürürlük ve Değişiklikler</h6>
+                    <p class="text-muted small text-justify">
+                        Bu metin, platform üzerinde yayınlandığı andan itibaren geçerlidir. Platform yönetimi, kuralları önceden haber vermeksizin güncelleme hakkını saklı tutar.
+                    </p>
+
                 </div>
             </div>
         </div>
