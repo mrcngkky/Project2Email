@@ -1,0 +1,196 @@
+﻿@model Project2EmailNight.Dtos.UserRegisterDto
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Kayıt Ol - Syndash</title>
+
+    <link rel="icon" href="~/assets/images/favicon-32x32.png" type="image/png" />
+    <link href="~/assets/css/pace.min.css" rel="stylesheet" />
+    <script src="~/assets/js/pace.min.js"></script>
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&family=Roboto&display=swap" />
+    <link rel="stylesheet" href="~/assets/css/icons.css" />
+    <link rel="stylesheet" href="~/assets/css/app.css" />
+
+    <style>
+        .card-padding-custom {
+            padding: 2rem !important;
+        }
+
+        .separator-expanded {
+            margin-top: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .form-label {
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+            font-weight: 600;
+            color: #4f5d77;
+        }
+
+        .form-control {
+            font-size: 0.9rem;
+            padding: 0.4rem 0.7rem;
+        }
+
+        .login-image-limit {
+            max-height: 520px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .small-text {
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+
+<body class="bg-register">
+    <div class="wrapper">
+        <div class="section-authentication-register d-flex align-items-center justify-content-center min-vh-100">
+            <div class="row w-100">
+                <div class="col-12 col-lg-9 mx-auto">
+                    <div class="card radius-15 overflow-hidden shadow-lg my-4">
+                        <div class="row g-0">
+
+                            <div class="col-xl-6">
+                                <div class="card-body card-padding-custom">
+
+                                    <div class="text-center">
+                                        <img src="~/assets/images/logo-icon.png" width="45" alt="">
+                                        <h5 class="mt-2 font-weight-bold">Hesap Oluştur</h5>
+                                    </div>
+
+                                    <div class="">
+                                        <div class="d-grid mt-3">
+                                            <a class="btn shadow-sm btn-white" href="javascript:;">
+                                                <span class="d-flex justify-content-center align-items-center">
+                                                    <img class="me-2" src="~/assets/images/icons/search.svg" width="16" alt="Image Description">
+                                                    <span>Google ile Kayıt Ol</span>
+                                                </span>
+                                            </a>
+                                        </div>
+
+                                        <div class="login-separater text-center separator-expanded">
+                                            <span style="background: #fff; padding: 0 10px; font-size: 11px; font-weight: bold; color: #888;">YA DA EMAIL İLE</span>
+                                            <hr style="margin: 0;">
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="text-danger small" asp-validation-summary="ModelOnly"></div>
+                                        </div>
+
+                                        <div class="form-body">
+                                            <form class="row g-2" asp-action="CreateUser" asp-controller="Register" method="post">
+
+                                                <div class="col-sm-6">
+                                                    <label class="form-label">Adınız</label>
+                                                    <input type="text" class="form-control" asp-for="Name" placeholder="Adınız">
+                                                    <span asp-validation-for="Name" class="text-danger small"></span>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label class="form-label">Soyadınız</label>
+                                                    <input type="text" class="form-control" asp-for="Surname" placeholder="Soyadınız">
+                                                    <span asp-validation-for="Surname" class="text-danger small"></span>
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <label class="form-label">Kullanıcı Adı</label>
+                                                    <input type="text" class="form-control" asp-for="Username" placeholder="Kullanıcı Adı">
+                                                    <span asp-validation-for="Username" class="text-danger small"></span>
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <label class="form-label">Email Adresi</label>
+                                                    <input type="email" class="form-control" asp-for="Email" placeholder="ornek@gmail.com">
+                                                    <span asp-validation-for="Email" class="text-danger small"></span>
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <label class="form-label">Şifre</label>
+                                                    <div class="input-group" id="show_hide_password">
+                                                        <input type="password" class="form-control border-end-0" asp-for="Password" placeholder="Şifreniz">
+                                                        <a href="javascript:;" class="input-group-text bg-transparent"><i class="bx bx-hide"></i></a>
+                                                    </div>
+                                                    <span asp-validation-for="Password" class="text-danger small"></span>
+                                                </div>
+
+                                                <div class="col-12 mt-3">
+                                                    <div class="form-check form-switch">
+                                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" required>
+                                                        <label class="form-check-label small-text" for="flexSwitchCheckChecked">
+                                                            <a href="#" data-bs-toggle="modal" data-bs-target="#TermsModal">Şartları ve Koşulları</a> okudum.
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 mt-3">
+                                                    <div class="d-grid">
+                                                        <button type="submit" class="btn btn-primary"><i class="bx bx-user me-1"></i>Kayıt Ol</button>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 text-center mt-3">
+                                                    <p class="mb-0 small-text">Zaten hesabınız var mı? <a asp-action="Index" asp-controller="Login">Giriş Yap</a></p>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-6 bg-login-color d-flex align-items-center justify-content-center">
+                                <img src="~/assets/images/login-images/register-frent-img.jpg" class="img-fluid login-image-limit" alt="...">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="TermsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Kullanım Şartları</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Kurallar ve gizlilik politikası metni...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#show_hide_password a").on('click', function (event) {
+                event.preventDefault();
+                if ($('#show_hide_password input').attr("type") == "text") {
+                    $('#show_hide_password input').attr('type', 'password');
+                    $('#show_hide_password i').addClass("bx-hide");
+                    $('#show_hide_password i').removeClass("bx-show");
+                } else if ($('#show_hide_password input').attr("type") == "password") {
+                    $('#show_hide_password input').attr('type', 'text');
+                    $('#show_hide_password i').removeClass("bx-hide");
+                    $('#show_hide_password i').addClass("bx-show");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

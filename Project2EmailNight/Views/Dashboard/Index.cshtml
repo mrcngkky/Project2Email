@@ -1,0 +1,429 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .dashboard-layout {
+        display: flex;
+        gap: 20px; /* 24px → 20px */
+        padding: 20px 20px 20px 0; /* Sol padding sıfır */
+        background: #f5f5f5;
+        min-height: calc(100vh - 120px);
+    }
+
+    .sidebar-menu {
+        width: 260px;
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        height: fit-content;
+        position: sticky;
+        top: 20px;
+        margin-left: -45px; /* YENİ SATIR */
+    }
+
+    .menu-header {
+        font-size: 11px;
+        font-weight: 700;
+        color: #5f6368;
+        margin: 20px 0 8px 12px;
+        letter-spacing: 0.5px;
+    }
+
+    .menu-item {
+        display: flex;
+        align-items: center;
+        padding: 12px 16px;
+        border-radius: 0 50px 50px 0;
+        margin-right: 15px;
+        color: #5f6368;
+        text-decoration: none;
+        transition: all 0.2s;
+        cursor: pointer;
+        font-weight: 500;
+    }
+
+        .menu-item:hover {
+            background: #f1f3f4;
+            color: #202124;
+        }
+
+        .menu-item.active {
+            background: #ede7f6;
+            color: #673ab7;
+            font-weight: 700;
+        }
+
+        .menu-item i {
+            font-size: 20px;
+            margin-right: 16px;
+            width: 24px;
+        }
+
+    .category-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-right: 16px;
+        margin-left: 7px;
+    }
+
+    /* SAĞ İÇERİK */
+    .main-content {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .welcome-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 40px;
+        border-radius: 16px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .welcome-title {
+        font-size: 32px;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .welcome-subtitle {
+        font-size: 16px;
+        opacity: 0.9;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 24px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        transition: all 0.3s;
+        cursor: pointer;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .stat-card.purple {
+            border-left: 4px solid #667eea;
+        }
+
+        .stat-card.pink {
+            border-left: 4px solid #f093fb;
+        }
+
+        .stat-card.blue {
+            border-left: 4px solid #4facfe;
+        }
+
+        .stat-card.orange {
+            border-left: 4px solid #fa709a;
+        }
+
+        .stat-card.green {
+            border-left: 4px solid #30cfd0;
+        }
+
+        .stat-card.red {
+            border-left: 4px solid #ff6b6b;
+        }
+
+    .stat-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        margin-bottom: 16px;
+    }
+
+        .stat-icon.purple {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+        }
+
+        .stat-icon.pink {
+            background: rgba(240, 147, 251, 0.1);
+            color: #f093fb;
+        }
+
+        .stat-icon.blue {
+            background: rgba(79, 172, 254, 0.1);
+            color: #4facfe;
+        }
+
+        .stat-icon.orange {
+            background: rgba(250, 112, 154, 0.1);
+            color: #fa709a;
+        }
+
+        .stat-icon.green {
+            background: rgba(48, 207, 208, 0.1);
+            color: #30cfd0;
+        }
+
+        .stat-icon.red {
+            background: rgba(255, 107, 107, 0.1);
+            color: #ff6b6b;
+        }
+
+    .stat-number {
+        font-size: 32px;
+        font-weight: 700;
+        color: #202124;
+        margin-bottom: 4px;
+    }
+
+    .stat-label {
+        color: #5f6368;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-bottom: 30px;
+    }
+
+    .action-btn {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+        border: 2px solid #e0e0e0;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        color: #202124;
+    }
+
+        .action-btn:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .action-btn i {
+            font-size: 32px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+    .recent-activity {
+        background: white;
+        padding: 24px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .activity-item {
+        display: flex;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid #f1f3f4;
+    }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+    .activity-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 12px;
+        font-size: 18px;
+    }
+
+    .activity-content {
+        flex: 1;
+    }
+
+    .activity-title {
+        font-weight: 600;
+        color: #202124;
+        font-size: 14px;
+    }
+
+    .activity-time {
+        color: #5f6368;
+        font-size: 12px;
+    }
+</style>
+
+<div class="dashboard-layout">
+
+    <!-- SOL MENÜ -->
+    <div class="sidebar-menu">
+        <a href="/Dashboard/Index" class="menu-item active">
+            <i class='bx bx-home-alt'></i>
+            <span>Dashboard</span>
+        </a>
+
+        <div class="menu-header">POSTA KUTUSU</div>
+
+        <a href="/Message/Inbox" class="menu-item">
+            <i class='bx bxs-inbox'></i>
+            <span>Gelen Kutusu</span>
+            <span class="ms-auto small fw-bold">@ViewBag.UnreadCount</span>
+        </a>
+
+        <a href="/Message/Sendbox" class="menu-item">
+            <i class='bx bxs-send'></i>
+            <span>Gönderilen</span>
+        </a>
+
+        <a href="/Message/Inbox?filter=starred" class="menu-item">
+            <i class='bx bx-star'></i>
+            <span>Yıldızlı</span>
+        </a>
+
+        <a href="/Message/Inbox?filter=drafts" class="menu-item">
+            <i class='bx bx-file'></i>
+            <span>Taslaklar</span>
+        </a>
+
+        <div class="menu-header">KATEGORİLER</div>
+
+        <a href="javascript:;" class="menu-item">
+            <div class="category-dot" style="background: #673ab7;"></div>
+            <span>İş</span>
+        </a>
+
+        <a href="javascript:;" class="menu-item">
+            <div class="category-dot" style="background: #ff9800;"></div>
+            <span>Eğitim</span>
+        </a>
+
+        <a href="javascript:;" class="menu-item">
+            <div class="category-dot" style="background: #e53935;"></div>
+            <span>Acil</span>
+        </a>
+
+        <a href="javascript:;" class="menu-item">
+            <div class="category-dot" style="background: #1976d2;"></div>
+            <span>Sosyal</span>
+        </a>
+    </div>
+
+    <!-- SAĞ İÇERİK -->
+    <div class="main-content">
+
+        <!-- Hoş Geldin -->
+        <div class="welcome-section">
+            <h1 class="welcome-title">Hoş Geldiniz!</h1>
+            <p class="welcome-subtitle">İşte bugünkü mail aktivitelerinizin özeti</p>
+        </div>
+
+        <!-- İstatistik Kartları -->
+        <div class="stats-grid">
+            <div class="stat-card purple" onclick="window.location='/Message/Inbox'">
+                <div class="stat-icon purple">
+                    <i class='bx bx-envelope'></i>
+                </div>
+                <div class="stat-number">@ViewBag.TotalMessages</div>
+                <div class="stat-label">Toplam Mail</div>
+            </div>
+
+            <div class="stat-card pink" onclick="window.location='/Message/Inbox?filter=all'">
+                <div class="stat-icon pink">
+                    <i class='bx bxs-inbox'></i>
+                </div>
+                <div class="stat-number">@ViewBag.InboxCount</div>
+                <div class="stat-label">Gelen Kutusu</div>
+            </div>
+
+            <div class="stat-card blue" onclick="window.location='/Message/Sendbox'">
+                <div class="stat-icon blue">
+                    <i class='bx bxs-send'></i>
+                </div>
+                <div class="stat-number">@ViewBag.SentCount</div>
+                <div class="stat-label">Gönderilen</div>
+            </div>
+
+            <div class="stat-card orange">
+                <div class="stat-icon orange">
+                    <i class='bx bx-envelope-open'></i>
+                </div>
+                <div class="stat-number">@ViewBag.UnreadCount</div>
+                <div class="stat-label">Okunmamış</div>
+            </div>
+
+            <div class="stat-card green" onclick="window.location='/Message/Inbox?filter=drafts'">
+                <div class="stat-icon green">
+                    <i class='bx bx-file'></i>
+                </div>
+                <div class="stat-number">@ViewBag.DraftCount</div>
+                <div class="stat-label">Taslak</div>
+            </div>
+
+            <div class="stat-card red" onclick="window.location='/Message/Inbox?filter=starred'">
+                <div class="stat-icon red">
+                    <i class='bx bxs-star'></i>
+                </div>
+                <div class="stat-number">@ViewBag.StarredCount</div>
+                <div class="stat-label">Yıldızlı</div>
+            </div>
+        </div>
+
+        <!-- Hızlı İşlemler -->
+        <h5 class="mb-3 fw-bold">Hızlı İşlemler</h5>
+        <div class="quick-actions">
+            <a href="/Message/Inbox" class="action-btn">
+                <i class='bx bxs-envelope text-primary'></i>
+                <div>Yeni Mail</div>
+            </a>
+            <a href="/Message/Inbox" class="action-btn">
+                <i class='bx bxs-inbox text-success'></i>
+                <div>Gelen Kutusu</div>
+            </a>
+            <a href="/Message/Inbox?filter=drafts" class="action-btn">
+                <i class='bx bxs-file text-warning'></i>
+                <div>Taslaklar</div>
+            </a>
+            <a href="/Profile/Index" class="action-btn">
+                <i class='bx bxs-user text-danger'></i>
+                <div>Profilim</div>
+            </a>
+        </div>
+
+        <!-- Son Aktiviteler -->
+        <div class="recent-activity">
+            <h5 class="mb-4 fw-bold">Son Aktiviteler</h5>
+
+            @foreach (var message in ViewBag.RecentMessages)
+            {
+                <div class="activity-item" onclick="window.location='/Message/Details/@message.MessageId'" style="cursor:pointer;">
+                    <div class="activity-icon" style="background: #e8f0fe; color: #1967d2;">
+                        <i class='bx bx-envelope'></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-title">@message.Subject</div>
+                        <div class="activity-time">@message.SenderEmail • @message.SendDate.ToString("dd MMM HH:mm")</div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>

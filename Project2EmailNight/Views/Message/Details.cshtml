@@ -1,0 +1,342 @@
+﻿@model Project2EmailNight.Entities.Message
+@{
+    ViewData["Title"] = "Mesaj Detay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .message-detail-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .message-header {
+        background: #fff;
+        border-radius: 8px;
+        padding: 24px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        margin-bottom: 16px;
+    }
+
+    .message-subject {
+        font-size: 22px;
+        font-weight: 600;
+        color: #202124;
+        margin-bottom: 16px;
+    }
+
+    .category-badge {
+        padding: 4px 12px;
+        font-size: 12px;
+        border-radius: 12px;
+        font-weight: 600;
+        display: inline-block;
+        margin-left: 12px;
+    }
+
+    .sender-info {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+
+    .sender-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #673ab7;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 16px;
+        margin-right: 12px;
+    }
+
+    .sender-details {
+        flex: 1;
+    }
+
+    .sender-name {
+        font-weight: 600;
+        color: #202124;
+        font-size: 14px;
+    }
+
+    .sender-email {
+        color: #5f6368;
+        font-size: 13px;
+    }
+
+    .message-date {
+        color: #5f6368;
+        font-size: 13px;
+    }
+
+    .message-body {
+        background: #fff;
+        border-radius: 8px;
+        padding: 24px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        margin-bottom: 16px;
+        line-height: 1.6;
+        color: #202124;
+        min-height: 200px;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 8px;
+        margin-top: 16px;
+    }
+
+    .btn-action {
+        padding: 8px 16px;
+        border-radius: 20px;
+        border: 1px solid #dadce0;
+        background: white;
+        color: #5f6368;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+        .btn-action:hover {
+            background: #f8f9fa;
+            border-color: #5f6368;
+        }
+
+        .btn-action i {
+            margin-right: 6px;
+        }
+
+    .attachment-card {
+        background: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .attachment-item {
+        display: flex;
+        align-items: center;
+        padding: 12px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        margin-bottom: 8px;
+        transition: all 0.2s;
+    }
+
+        .attachment-item:hover {
+            background: #f8f9fa;
+            border-color: #673ab7;
+        }
+
+    .attachment-icon {
+        width: 40px;
+        height: 40px;
+        background: #e8eaed;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 12px;
+        font-size: 20px;
+        color: #5f6368;
+    }
+
+    .attachment-info {
+        flex: 1;
+    }
+
+    .attachment-name {
+        font-weight: 500;
+        color: #202124;
+        font-size: 14px;
+    }
+
+    .attachment-size {
+        color: #5f6368;
+        font-size: 12px;
+    }
+
+    .btn-download {
+        padding: 6px 16px;
+        background: #673ab7;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+        .btn-download:hover {
+            background: #5e35b1;
+        }
+
+    .starred-icon {
+        font-size: 20px;
+        cursor: pointer;
+        color: #fbc02d;
+    }
+</style>
+
+<div class="message-detail-container">
+
+    <!-- Başlık Bölümü -->
+    <div class="message-header">
+        <div class="d-flex justify-content-between align-items-start">
+            <div>
+                <h1 class="message-subject">
+                    @(string.IsNullOrEmpty(Model.Subject) ? "(Konu yok)" : Model.Subject)
+                    <span class="category-badge bg-soft-@(Model.Category == "İş" ? "purple" : Model.Category == "Acil" ? "danger" : Model.Category == "Eğitim" ? "warning" : Model.Category == "Sosyal" ? "primary" : "secondary")">
+                        @Model.Category
+                    </span>
+                </h1>
+            </div>
+            <div>
+                <i class='bx @(Model.IsStarred ? "bxs-star" : "bx-star") starred-icon'
+                   onclick="toggleStar(@Model.MessageId, this)"></i>
+            </div>
+        </div>
+
+        <!-- Gönderici Bilgisi -->
+        <div class="sender-info">
+            <div class="sender-avatar">
+                @Model.SenderEmail.Substring(0, 1).ToUpper()
+            </div>
+            <div class="sender-details">
+                <div class="sender-name">@Model.SenderEmail</div>
+                <div class="sender-email">Alıcı: @Model.ReceiverEmail</div>
+            </div>
+            <div class="message-date">
+                @Model.SendDate.ToString("dd MMMM yyyy, HH:mm")
+            </div>
+        </div>
+
+        <!-- Aksiyon Butonları -->
+        <div class="action-buttons">
+            <button class="btn-action" onclick="window.location='/Message/Inbox'">
+                <i class='bx bx-arrow-back'></i> Geri Dön
+            </button>
+            <button class="btn-action" onclick="replyMessage()">
+                <i class='bx bx-reply'></i> Yanıtla
+            </button>
+            <button class="btn-action" onclick="forwardMessage()">
+                <i class='bx bx-share'></i> İlet
+            </button>
+            <button class="btn-action" onclick="deleteMessage(@Model.MessageId)">
+                <i class='bx bx-trash'></i> Sil
+            </button>
+        </div>
+    </div>
+
+    <!-- Mesaj İçeriği -->
+    <div class="message-body">
+        @Html.Raw(Model.MessageDetail)
+    </div>
+
+    <!-- Dosya Ekleri -->
+    @if (Model.Attachments != null && Model.Attachments.Count > 0)
+    {
+        <div class="attachment-card">
+            <h6 class="mb-3">
+                <i class='bx bx-paperclip me-2'></i>
+                Ekler (@Model.Attachments.Count)
+            </h6>
+
+            @foreach (var attachment in Model.Attachments)
+            {
+                <div class="attachment-item">
+                    <div class="attachment-icon">
+                        <i class='bx bx-file'></i>
+                    </div>
+                    <div class="attachment-info">
+                        <div class="attachment-name">@attachment.FileName</div>
+                        <div class="attachment-size">
+                            @{
+                                var sizeKB = (attachment.FileSize / 1024.0);
+                                var sizeMB = (attachment.FileSize / (1024.0 * 1024.0));
+                                var displaySize = sizeMB >= 1
+                                ? $"{sizeMB:F2} MB"
+                                : $"{sizeKB:F2} KB";
+                            }
+                            @displaySize
+                        </div>
+                    </div>
+                    <a href="@attachment.FilePath" download="@attachment.FileName" class="btn-download">
+                        <i class='bx bx-download me-1'></i> İndir
+                    </a>
+                </div>
+            }
+        </div>
+    }
+
+</div>
+
+@section Scripts {
+    <script>
+        // Yıldızlama
+        function toggleStar(messageId, element) {
+            if(element.classList.contains('bx-star')) {
+                element.classList.remove('bx-star');
+                element.classList.add('bxs-star');
+            } else {
+                element.classList.remove('bxs-star');
+                element.classList.add('bx-star');
+            }
+            fetch('/Message/ToggleStar/' + messageId, { method: 'POST' });
+        }
+
+        // Yanıtla
+        function replyMessage() {
+            window.location = '/Message/Inbox'; // Inbox'ta modal açılacak şekilde ayarlayabilirsin
+        }
+
+        // İlet
+        function forwardMessage() {
+            alert('İletme özelliği yakında eklenecek!');
+        }
+
+        // Sil
+        function deleteMessage(messageId) {
+            if (confirm('Bu mesajı silmek istediğinize emin misiniz?')) {
+                window.location = '/Message/DeleteMessage/' + messageId;
+            }
+        }
+    </script>
+}
+
+<style>
+    /* Kategori Badge Renkleri */
+    .bg-soft-purple {
+        background: #673ab7;
+        color: #fff;
+    }
+
+    .bg-soft-warning {
+        background: #ff9800;
+        color: #fff;
+    }
+
+    .bg-soft-danger {
+        background: #e53935;
+        color: #fff;
+    }
+
+    .bg-soft-primary {
+        background: #1976d2;
+        color: #fff;
+    }
+
+    .bg-soft-secondary {
+        background: #9e9e9e;
+        color: #fff;
+    }
+</style>
+
+
+

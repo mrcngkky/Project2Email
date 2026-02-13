@@ -1,0 +1,128 @@
+﻿@inject Microsoft.AspNetCore.Identity.UserManager<Project2EmailNight.Entities.AppUser> UserManager
+
+@{
+    // 2. ADIM: Giriş yapan kullanıcıyı veritabanından çekiyoruz
+    var currentUser = await UserManager.FindByNameAsync(User.Identity.Name);
+
+    // Eğer kullanıcı bulunamazsa (hata almamak için) varsayılan değerler atıyoruz
+    string adSoyad = currentUser != null ? $"{currentUser.Name} {currentUser.Surname}" : "Misafir Kullanıcı";
+    string resimYolu = (currentUser != null && !string.IsNullOrEmpty(currentUser.ImageUrl)) ? currentUser.ImageUrl : "no-image.png";
+    string unvan = "Üye"; 
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Project2EmailNight</title>
+
+    <link rel="icon" href="~/assets/images/favicon-32x32.png" type="image/png" />
+
+    <link href="~/assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
+    <link href="~/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
+    <link href="~/assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
+    <link href="~/assets/css/pace.min.css" rel="stylesheet" />
+    <script src="~/assets/js/pace.min.js"></script>
+    <link rel="stylesheet" href="~/assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/assets/css/icons.css" />
+    <link rel="stylesheet" href="~/assets/css/app.css" />
+    <link rel="stylesheet" href="~/assets/css/dark-sidebar.css" />
+    <link rel="stylesheet" href="~/assets/css/dark-theme.css" />
+
+    <style>
+        .page-wrapper {
+            margin-left: 0 !important;
+        }
+
+        .footer {
+            left: 0 !important;
+        }
+
+        
+        .user-img {
+            object-fit: cover;
+            border: 2px solid #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+
+        <header class="top-header" style="left:0; width:100%;">
+            <nav class="navbar navbar-expand">
+                <div class="left-topbar d-flex align-items-center">
+                    <div class="d-flex align-items-center gap-2">
+                        <img src="~/assets/images/logo-icon.png" class="logo-icon" alt="logo" style="width:30px;">
+                        <h4 class="logo-text ms-2">EmailNight</h4>
+                    </div>
+                </div>
+
+                <div class="right-topbar ms-auto">
+                    <ul class="navbar-nav">
+                        
+                        
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Dashboard/Index" title="Dashboard">
+                                <i class='bx bx-home-alt font-24'></i>
+                            </a>
+                        </li>
+                        
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Message/Inbox" title="Mesajlarım">
+                                <div class="d-flex align-items-center">
+                                    <i class="bx bx-envelope" style="font-size: 24px;"></i>
+                                </div>
+                            </a>
+                        </li>
+
+                        
+
+
+
+                        <li class="nav-item dropdown dropdown-user-profile">
+                            <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;" data-bs-toggle="dropdown">
+                                <div class="d-flex user-box align-items-center">
+                                    <div class="user-info">
+                                        <p class="user-name mb-0">@adSoyad</p>
+                                        <p class="designattion mb-0">@unvan</p>
+                                    </div>
+                                    <img src="/images/@resimYolu" class="user-img" alt="user avatar">
+                                </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item" href="/Profile/Index"><i class="bx bx-user"></i><span>Profilim</span></a>
+                                <div class="dropdown-divider mb-0"></div>
+                                <a class="dropdown-item" href="/Login/UserLogin"><i class="bx bx-power-off"></i><span>Çıkış Yap</span></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <div class="page-wrapper">
+            <div class="page-content-wrapper">
+                <div class="page-content">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p class="mb-0">Project2EmailNight &copy; 2026 | Email Uygulaması</p>
+        </div>
+    </div>
+
+    <script src="~/assets/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/js/jquery.min.js"></script>
+    <script src="~/assets/plugins/simplebar/js/simplebar.min.js"></script>
+    <script src="~/assets/plugins/metismenu/js/metisMenu.min.js"></script>
+    <script src="~/assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+    <script src="~/assets/js/app.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
